@@ -21,6 +21,8 @@ import com.facebook.swift.parser.visitor.Visitable;
 
 import java.io.IOException;
 
+import org.antlr.runtime.Token;
+
 public abstract class Definition implements Visitable, Nameable
 {
     @Override
@@ -34,4 +36,6 @@ public abstract class Definition implements Visitable, Nameable
 
     @Override
     public abstract String toString();
+
+    public abstract Token getToken();
 }

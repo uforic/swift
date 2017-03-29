@@ -24,6 +24,8 @@ import com.google.common.collect.ImmutableList;
 import java.io.IOException;
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class Service
@@ -32,12 +34,14 @@ public class Service
     private final String name;
     private final Optional<String> parent;
     private final List<ThriftMethod> methods;
+    private final Token token;
 
-    public Service(String name, String parent, List<ThriftMethod> methods, List<TypeAnnotation> annotations)
+    public Service(String name, String parent, List<ThriftMethod> methods, List<TypeAnnotation> annotations, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.parent = Optional.fromNullable(parent);
         this.methods = ImmutableList.copyOf(checkNotNull(methods, "methods"));
+        this.token = token;
     }
 
     @Override
@@ -54,6 +58,10 @@ public class Service
     public List<ThriftMethod> getMethods()
     {
         return methods;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override

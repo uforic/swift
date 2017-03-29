@@ -23,6 +23,8 @@ import com.google.common.collect.ImmutableList;
 import java.io.IOException;
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class AbstractStruct
@@ -31,12 +33,14 @@ public abstract class AbstractStruct
     private final String name;
     private final List<ThriftField> fields;
     private final List<TypeAnnotation> annotations;
+    private final Token token;
 
-    public AbstractStruct(String name, List<ThriftField> fields, List<TypeAnnotation> annotations)
+    public AbstractStruct(String name, List<ThriftField> fields, List<TypeAnnotation> annotations, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.fields = ImmutableList.copyOf(checkNotNull(fields, "fields"));
         this.annotations = ImmutableList.copyOf(checkNotNull(annotations, "annotations"));
+        this.token = token;
     }
 
     @Override
@@ -53,6 +57,10 @@ public abstract class AbstractStruct
     public List<TypeAnnotation> getAnnotations()
     {
         return annotations;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override

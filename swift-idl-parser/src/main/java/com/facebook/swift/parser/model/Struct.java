@@ -17,11 +17,14 @@ package com.facebook.swift.parser.model;
 
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 public class Struct
         extends AbstractStruct
 {
-    public Struct(String name, List<ThriftField> fields, List<TypeAnnotation> annotations)
+    public Struct(String name, List<ThriftField> fields, List<TypeAnnotation> annotations, Token token)
     {
-        super(name, fields, annotations);
+        super(name, fields, annotations, token);
     }
+
 }

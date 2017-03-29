@@ -92,35 +92,35 @@ definition returns [Definition value]
     ;
 
 const_rule returns [Const value]
-    : ^(CONST k=IDENTIFIER t=field_type v=const_value) { $value = new Const($k.text, $t.value, $v.value); }
+    : ^(CONST k=IDENTIFIER t=field_type v=const_value) { $value = new Const($k.text, $t.value, $v.value, $k.token); }
     ;
 
 typedef returns [Typedef value]
-    : ^(TYPEDEF k=IDENTIFIER t=field_type) { $value = new Typedef($k.text, $t.value); }
+    : ^(TYPEDEF k=IDENTIFIER t=field_type) { $value = new Typedef($k.text, $t.value, $k.token); }
     ;
 
 enum_rule returns [IntegerEnum value]
-    : ^(ENUM k=IDENTIFIER v=enum_fields) { $value = new IntegerEnum($k.text, $v.value); }
+    : ^(ENUM k=IDENTIFIER v=enum_fields) { $value = new IntegerEnum($k.text, $v.value, $k.token); }
     ;
 
 senum returns [StringEnum value]
-    : ^(SENUM k=IDENTIFIER v=senum_values) { $value = new StringEnum($k.text, $v.value); }
+    : ^(SENUM k=IDENTIFIER v=senum_values) { $value = new StringEnum($k.text, $v.value, $k.token); }
     ;
 
 struct returns [Struct value]
-    : ^(STRUCT k=IDENTIFIER f=fields t=type_annotations) { $value = new Struct($k.text, $f.value, $t.value); }
+    : ^(STRUCT k=IDENTIFIER f=fields t=type_annotations) { $value = new Struct($k.text, $f.value, $t.value, $k.token); }
     ;
 
 union returns [Union value]
-    : ^(UNION k=IDENTIFIER f=fields t=type_annotations) { $value = new Union($k.text, $f.value, $t.value); }
+    : ^(UNION k=IDENTIFIER f=fields t=type_annotations) { $value = new Union($k.text, $f.value, $t.value, $k.token); }
     ;
 
 exception returns [ThriftException value]
-    : ^(EXCEPTION k=IDENTIFIER f=fields t=type_annotations) { $value = new ThriftException($k.text, $f.value, $t.value); }
+    : ^(EXCEPTION k=IDENTIFIER f=fields t=type_annotations) { $value = new ThriftException($k.text, $f.value, $t.value, $k.token); }
     ;
 
 service returns [Service value]
-    : ^(SERVICE k=IDENTIFIER ^(EXTENDS e=IDENTIFIER?) f=functions t=type_annotations) { $value = new Service($k.text, $e.text, $f.value, $t.value); }
+    : ^(SERVICE k=IDENTIFIER ^(EXTENDS e=IDENTIFIER?) f=functions t=type_annotations) { $value = new Service($k.text, $e.text, $f.value, $t.value, $k.token); }
     ;
 
 
@@ -128,7 +128,7 @@ const_value returns [ConstValue value]
     : i=integer     { $value = new ConstInteger($i.value); }
     | d=DOUBLE      { $value = new ConstDouble(Double.parseDouble($d.text)); }
     | s=LITERAL     { $value = new ConstString($s.text); }
-    | s=IDENTIFIER  { $value = new ConstIdentifier($s.text); }
+    | s=IDENTIFIER  { $value = new ConstIdentifier($s.text, $s.token); }
     | l=const_list  { $value = new ConstList($l.value); }
     | m=const_map   { $value = new ConstMap($m.value); }
     ;

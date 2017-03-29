@@ -19,12 +19,15 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 @SuppressFBWarnings("NM_CLASS_NOT_EXCEPTION")
 public class ThriftException
         extends AbstractStruct
 {
-    public ThriftException(String name, List<ThriftField> fields, List<TypeAnnotation> annotations)
+    public ThriftException(String name, List<ThriftField> fields, List<TypeAnnotation> annotations, Token token)
     {
-        super(name, fields, annotations);
+        super(name, fields, annotations, token);
     }
+    
 }

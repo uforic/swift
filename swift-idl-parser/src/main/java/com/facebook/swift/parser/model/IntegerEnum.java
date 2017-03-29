@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class IntegerEnum
@@ -27,11 +29,13 @@ public class IntegerEnum
 {
     private final String name;
     private final List<IntegerEnumField> fields;
+    private final Token token;
 
-    public IntegerEnum(String name, List<IntegerEnumField> fields)
+    public IntegerEnum(String name, List<IntegerEnumField> fields, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.fields = ImmutableList.copyOf(checkNotNull(fields, "fields"));
+        this.token = token;
     }
 
     @Override
@@ -43,6 +47,10 @@ public class IntegerEnum
     public List<IntegerEnumField> getFields()
     {
         return fields;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override
