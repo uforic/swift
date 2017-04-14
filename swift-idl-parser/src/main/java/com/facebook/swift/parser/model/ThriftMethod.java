@@ -23,6 +23,8 @@ import com.google.common.collect.ImmutableList;
 import java.io.IOException;
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class ThriftMethod implements Visitable
@@ -33,14 +35,15 @@ public class ThriftMethod implements Visitable
     private final boolean oneway;
     private final List<ThriftField> throwsFields;
     private final List<TypeAnnotation> annotations;
-
+    private final Token token;
     public ThriftMethod(
             String name,
             ThriftType returnType,
             List<ThriftField> arguments,
             boolean oneway,
             List<ThriftField> throwsFields,
-            List<TypeAnnotation> annotations)
+            List<TypeAnnotation> annotations,
+            Token token)
     {
         this.name = checkNotNull(name, "name");
         this.returnType = checkNotNull(returnType, "returnType");
@@ -49,6 +52,7 @@ public class ThriftMethod implements Visitable
         this.throwsFields = ImmutableList.copyOf(
                 MoreObjects.firstNonNull(throwsFields, ImmutableList.<ThriftField>of()));
         this.annotations = ImmutableList.copyOf(checkNotNull(annotations, "annotations"));
+        this.token = token;
     }
 
     public String getName()
@@ -79,6 +83,10 @@ public class ThriftMethod implements Visitable
     public List<TypeAnnotation> getAnnotations()
     {
         return annotations;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override

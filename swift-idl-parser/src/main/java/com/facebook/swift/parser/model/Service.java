@@ -35,13 +35,15 @@ public class Service
     private final Optional<String> parent;
     private final List<ThriftMethod> methods;
     private final Token token;
+    private final Optional<Token> parentToken;
 
-    public Service(String name, String parent, List<ThriftMethod> methods, List<TypeAnnotation> annotations, Token token)
+    public Service(String name, String parent, List<ThriftMethod> methods, List<TypeAnnotation> annotations, Token token, Optional<Token> parentToken)
     {
         this.name = checkNotNull(name, "name");
         this.parent = Optional.fromNullable(parent);
         this.methods = ImmutableList.copyOf(checkNotNull(methods, "methods"));
         this.token = token;
+        this.parentToken = parentToken;
     }
 
     @Override
@@ -62,6 +64,9 @@ public class Service
 
     public Token getToken() {
         return token;
+    }
+    public Optional<Token> getParentToken() {
+        return parentToken;
     }
 
     @Override

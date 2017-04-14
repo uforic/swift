@@ -33,6 +33,8 @@ options {
     import java.util.List;
     import java.util.Map;
     import java.util.AbstractMap;
+
+    import com.google.common.base.Optional;
 }
 
 
@@ -120,7 +122,7 @@ exception returns [ThriftException value]
     ;
 
 service returns [Service value]
-    : ^(SERVICE k=IDENTIFIER ^(EXTENDS e=IDENTIFIER?) f=functions t=type_annotations) { $value = new Service($k.text, $e.text, $f.value, $t.value, $k.token); }
+    : ^(SERVICE k=IDENTIFIER ^(EXTENDS e=IDENTIFIER?) f=functions t=type_annotations) { $value = new Service($k.text, $e.text, $f.value, $t.value, $k.token, $e == null ? Optional.absent() : Optional.of($e.token)); }
     ;
 
 
@@ -172,7 +174,7 @@ functions returns [List<ThriftMethod> value = new ArrayList<>()]
 
 field returns [ThriftField value]
     : ^(FIELD k=IDENTIFIER t=field_type i=integer? r=field_req c=const_value? a=type_annotations)
-        { $value = new ThriftField($k.text, $t.value, $i.value, $r.value, $c.value, $a.value); }
+        { $value = new ThriftField($k.text, $t.value, $i.value, $r.value, $c.value, $a.value, $k.token); }
     ;
 
 field_req returns [ThriftField.Requiredness value]
@@ -184,7 +186,7 @@ field_req returns [ThriftField.Requiredness value]
 
 function returns [ThriftMethod value]
     : ^(METHOD k=IDENTIFIER t=function_type f=args o=oneway r=throws_list a=type_annotations)
-        { $value = new ThriftMethod($k.text, $t.value, $f.value, $o.value, $r.value, $a.value); }
+        { $value = new ThriftMethod($k.text, $t.value, $f.value, $o.value, $r.value, $a.value, $k.token); }
     ;
 
 args returns [List<ThriftField> value = new ArrayList<>()]
@@ -223,7 +225,7 @@ annotation_value returns [String value]
 
 field_type returns [ThriftType value]
     : b=base_type      { $value = $b.value; }
-    | s=IDENTIFIER     { $value = new IdentifierType($s.text); }
+    | s=IDENTIFIER     { $value = new IdentifierType($s.text, $s.token); }
     | c=container_type { $value = $c.value; }
     ;
 

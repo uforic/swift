@@ -15,8 +15,19 @@
  */
 package com.facebook.swift.parser.model;
 
+import org.antlr.runtime.Token;
+
+import com.google.common.base.Optional;
+
+
+
 public abstract class ThriftType
 {
+    private Optional<Token> token = Optional.absent();
     @Override
     public abstract String toString();
+
+    public Optional<Token> getToken() {
+        return token;
+    }
 }
