@@ -19,18 +19,22 @@ import com.google.common.base.MoreObjects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.antlr.runtime.Token;
+
 public class Const
     extends Definition
 {
     private final String name;
     private final ThriftType type;
     private final ConstValue value;
+    private final Token token;
 
-    public Const(String name, ThriftType type, ConstValue value)
+    public Const(String name, ThriftType type, ConstValue value, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.type = checkNotNull(type, "type");
         this.value = checkNotNull(value, "value");
+        this.token = token;
     }
 
     @Override
@@ -47,6 +51,10 @@ public class Const
     public ConstValue getValue()
     {
         return value;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override

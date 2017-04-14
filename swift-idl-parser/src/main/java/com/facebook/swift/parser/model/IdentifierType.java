@@ -16,22 +16,31 @@
 package com.facebook.swift.parser.model;
 
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Optional;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import org.antlr.runtime.Token;
 
 public class IdentifierType
         extends ThriftType
 {
     private final String name;
+    private final Token token;
 
-    public IdentifierType(String name)
+    public IdentifierType(String name, Token token)
     {
         this.name = checkNotNull(name, "name");
+        this.token = token;
     }
 
     public String getName()
     {
         return name;
+    }
+    @Override
+    public Optional<Token> getToken() {
+        return Optional.of(token);
     }
 
     @Override

@@ -24,6 +24,8 @@ import com.google.common.collect.Iterables;
 import java.io.IOException;
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.facebook.swift.codec.ThriftField.RECURSIVE_REFERENCE_ANNOTATION_NAME;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -41,6 +43,8 @@ public class ThriftField implements Visitable
     private final Optional<ConstValue> value;
     private final List<TypeAnnotation> annotations;
     private final boolean isRecursiveReference;
+    private final Token token;
+    private final Optional<Token> fieldTypeToken;
 
     public ThriftField(
             String name,
@@ -48,7 +52,8 @@ public class ThriftField implements Visitable
             Long identifier,
             Requiredness requiredness,
             ConstValue value,
-            List<TypeAnnotation> annotations)
+            List<TypeAnnotation> annotations,
+            Token token)
     {
         this.name = checkNotNull(name, "name");
         this.type = checkNotNull(type, "type");
@@ -56,6 +61,8 @@ public class ThriftField implements Visitable
         this.requiredness = checkNotNull(requiredness, "requiredness");
         this.value = Optional.fromNullable(value);
         this.annotations = checkNotNull(annotations, "annotations");
+        this.token = token;
+        this.fieldTypeToken = type.getToken();
 
         // Convert swift.recursive_reference annotations to isRecursive, and drop them
         this.isRecursiveReference = Iterables.removeIf(
@@ -98,6 +105,14 @@ public class ThriftField implements Visitable
     public List<TypeAnnotation> getAnnotations()
     {
         return annotations;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public Optional<Token> getFieldTypeToken() {
+        return fieldTypeToken;
     }
 
     @Override

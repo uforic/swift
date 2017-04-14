@@ -19,20 +19,28 @@ import com.google.common.base.MoreObjects;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.antlr.runtime.Token;
+
 public class ConstIdentifier
         extends ConstValue
 {
     private final String value;
+    private final Token token;
 
-    public ConstIdentifier(String value)
+    public ConstIdentifier(String value, Token token)
     {
         this.value = checkNotNull(value, "value");
+        this.token = token;
     }
 
     @Override
     public String value()
     {
         return value;
+    }
+
+    public Token token() {
+        return token;
     }
 
     @Override

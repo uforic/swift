@@ -20,6 +20,8 @@ import com.google.common.collect.ImmutableList;
 
 import java.util.List;
 
+import org.antlr.runtime.Token;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class StringEnum
@@ -27,11 +29,13 @@ public class StringEnum
 {
     private final String name;
     private final List<String> values;
+    private final Token token;
 
-    public StringEnum(String name, List<String> values)
+    public StringEnum(String name, List<String> values, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.values = ImmutableList.copyOf(checkNotNull(values, "values"));
+        this.token = token;
     }
 
     @Override
@@ -43,6 +47,10 @@ public class StringEnum
     public List<String> getValues()
     {
         return values;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override

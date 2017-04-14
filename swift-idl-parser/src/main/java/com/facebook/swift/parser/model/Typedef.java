@@ -20,16 +20,20 @@ import com.google.common.base.Preconditions;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import org.antlr.runtime.Token;
+
 public class Typedef
         extends Definition
 {
     private final String name;
     private final ThriftType type;
+    private final Token token;
 
-    public Typedef(String name, ThriftType type)
+    public Typedef(String name, ThriftType type, Token token)
     {
         this.name = checkNotNull(name, "name");
         this.type = Preconditions.checkNotNull(type, "type");
+        this.token = token;
     }
 
     @Override
@@ -41,6 +45,10 @@ public class Typedef
     public ThriftType getType()
     {
         return type;
+    }
+
+    public Token getToken() {
+        return token;
     }
 
     @Override
